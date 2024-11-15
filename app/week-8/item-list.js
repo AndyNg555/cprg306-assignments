@@ -2,15 +2,13 @@
 import { useState } from "react";
 import Item from "./item";
 
-const ItemList = ({ items }) => {
+const ItemList = ({ items, onItemSelect }) => {
   const [sortBy, setSortBy] = useState("name");
+
   const sortedItems = [...items].sort((a, b) => {
-    if (sortBy === "name") {
-      return a.name.localeCompare(b.name);
-    } else if (sortBy === "category") {
-      return a.category.localeCompare(b.category);
-    }
-    return 0;
+    return sortBy === "name"
+      ? a.name.localeCompare(b.name)
+      : a.category.localeCompare(b.category);
   });
 
   return (
@@ -18,15 +16,13 @@ const ItemList = ({ items }) => {
       <div className="mb-4">
         <button
           onClick={() => setSortBy("name")}
-          style={{ backgroundColor: sortBy === "name" ? "lightblue" : "white" }}
-          className="mr-2 px-4 py-2 border rounded"
+          className={`mr-2 px-4 py-2 border rounded ${sortBy === "name" ? "bg-lightblue" : ""}`}
         >
           Sort by Name
         </button>
         <button
           onClick={() => setSortBy("category")}
-          style={{ backgroundColor: sortBy === "category" ? "lightblue" : "white" }}
-          className="px-4 py-2 border rounded"
+          className={`px-4 py-2 border rounded ${sortBy === "category" ? "bg-lightblue" : ""}`}
         >
           Sort by Category
         </button>
@@ -38,6 +34,7 @@ const ItemList = ({ items }) => {
             name={item.name}
             quantity={item.quantity}
             category={item.category}
+            onSelect={() => onItemSelect(item)}
           />
         ))}
       </ul>
