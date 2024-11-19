@@ -1,23 +1,13 @@
 "use client";
-
-import { useState } from "react";
-import { useUserAuth } from "../_utils/auth-context";
-import { useRouter } from "next/navigation";
-import NewItem from "../new-item";
-import ItemList from "../item-list";
-import MealIdeas from "../meal-ideas";
-import itemsData from "./items.json";
+import { useState } from 'react';
+import NewItem from './new-item';
+import ItemList from './item-list';
+import MealIdeas from './meal-ideas';
+import itemsData from './items.json';
 
 const Page = () => {
-  const { user } = useUserAuth();
-  const router = useRouter();
   const [items, setItems] = useState(itemsData);
   const [selectedItemName, setSelectedItemName] = useState("");
-
-  if (!user) {
-    router.push("/");
-    return null;
-  }
 
   const handleAddItem = (newItem) => {
     setItems([...items, newItem]);
